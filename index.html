@@ -1662,123 +1662,43 @@ onclick="window.location.href='ejemplo.html'">
 
 <script>
 
-/* ================================================= */
-/* MODAL */
-/* ================================================= */
-
-function openModal(title,text){
-
-  document.getElementById('modal').style.display='flex';
-
-  document.getElementById('modalTitle').innerHTML=title;
-
-  document.getElementById('modalText').innerHTML=text;
-
-}
-
-function closeModal(){
-
-  document.getElementById('modal').style.display='none';
-
-}
-
-window.onclick=function(e){
-
-  const modal=document.getElementById('modal');
-
-  if(e.target==modal){
-    modal.style.display='none';
-  }
-
-}
-
-function slideLeft(id){
-
-  const slider=document.getElementById(id);
-
-  slider.scrollBy({
-    left:-350,
-    behavior:'smooth'
-  });
-
-}
-
-function slideRight(id){
-
-  const slider=document.getElementById(id);
-
-  slider.scrollBy({
-    left:350,
-    behavior:'smooth'
-  });
-
-}
-  function toggleMenu(){
-
-  document
-    .querySelector('nav ul')
-    .classList.toggle('active');
-
-}
-
-  const form =
+const form =
 document.getElementById("appointmentForm");
 
-  const URL = "https://script.google.com/macros/s/AKfycbyrtdqdNSxF7yp_n6C1aWzw4mHsb5SvGMKK9kjBM87ZWWwG4-4iUtqikrSaJHrlRh2D0w/exec";
-  
 form.addEventListener(
 "submit",
 async function(e){
 
   e.preventDefault();
 
-  const datos = {
-
-    nombre:
-      document.getElementById("nombre").value,
-
-    correo:
-      document.getElementById("correo").value,
-
-    telefono:
-      document.getElementById("telefono").value,
-
-    asesor:
-      document.getElementById("asesor").value,
-
-    servicio:
-      document.getElementById("servicio").value,
-
-    fecha:
-      document.getElementById("fecha").value,
-
-    mensaje:
-      document.getElementById("mensaje").value
-
-  };
+  const datos =
+  new FormData(form);
 
   try{
 
-    await fetch(URL, {
-  method: "POST",
-  body: new URLSearchParams(datos),
-  mode: "no-cors"
-});
+    await fetch(
+      "https://script.google.com/macros/s/AKfycbxLHeZAobek3VV2veLDxC4_iI05irHBvhWUshWXT_xWWOcj3Ev7TOuHR2xfYF6mvSa-sg/exec",
+      {
+        method:"POST",
+        body:datos
+      }
+    );
 
     alert(
-      "✅ Tu cita fue enviada correctamente."
+      "✅ Cita enviada correctamente"
     );
 
     form.reset();
 
   }
+
   catch(error){
 
-    alert(
-      "❌ Error al enviar la cita."
-    );
+    console.log(error);
 
-    console.error(error);
+    alert(
+      "❌ Error al enviar"
+    );
 
   }
 
